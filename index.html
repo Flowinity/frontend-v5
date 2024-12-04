@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <link href="/favicon.ico" rel="icon" />
+    <meta
+      content="width=device-width, height=device-height, initial-scale=1, interactive-widget=resizes-content"
+      name="viewport"
+    />
+    <title>Flowinity</title>
+    <meta
+      content="Flowinity is an online social and collaborative platform with a focus on secure cloud storage with extra features such as chatting, document editing, and more."
+      name="description"
+    />
+    <meta content="Flowinity (Formerly PrivateUploader)" property="og:site_name" />
+    <meta content="#121212" name="theme-color" />
+    <meta content="Flowinity" property="og:title" />
+    <meta
+      content="Flowinity is an online social and collaborative platform with a focus on secure cloud storage with extra features such as chatting, document editing, and more."
+      property="og:description"
+    />
+    <meta
+      content="TPU, PrivateUploader, TroploPrivateUploader, Flowinity, Troplo, Private Uploader"
+      name="keywords"
+    />
+    <link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
+    <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
+    <link color="#0190ea" href="/safari-pinned-tab.svg" rel="mask-icon" />
+    <meta content="Flowinity" name="apple-mobile-web-app-title" />
+    <meta content="Flowinity" name="application-name" />
+    <meta content="#121212" name="msapplication-TileColor" />
+    <meta content="#101010" name="theme-color" />
+    <meta property="og:image" content="https://assets.flowinity.com/home/0th.png" />
+    <meta name="twitter:image" content="https://assets.flowinity.com/home/0th.png" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="darkreader-lock" />
+    <style>
+      :root {
+        --v-theme-background: 18, 18, 18;
+        background-color: rgb(var(--v-theme-background));
+      }
+
+      .preinit-flex {
+        font-family: Inter, sans-serif;
+      }
+
+      .preinit-flex .margin {
+        margin-top: 0.25rem;
+        text-align: center;
+      }
+
+      .preinit-flex .title {
+        font-size: 2rem;
+        font-weight: 700;
+      }
+
+      .preinit-flex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width:100dvw;
+        height:100dvh;
+        overflow: hidden;
+        position: fixed;
+        color: white;
+      }
+
+      .preinit-flex a {
+        color: #0190ea;
+        text-decoration: none;
+      }
+
+       #spinner-overlay {
+         padding-top: 6px;
+       }
+
+       .crashed {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+       }
+
+       .flowinity-path {
+          fill: rgb(var(--v-theme-background));
+       }
+    </style>
+    <link rel="stylesheet" href="/fonts/inter/inter.css">
+    <link rel="stylesheet" href="/fonts/flowinity/flowinity.css">
+  </head>
+
+  <body style="--gradient-offset: 100%">
+    <div id="tpu-app">
+      <div class="preinit-flex">
+        <svg id="flowinity-preinit-logo" viewBox="0 0 416 472"  style="max-width:128px" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M160.834 330.387L160.808 330.414L255.212 424.818L208.01 472.02L20.1025 284.112C-6.46393 257.546 -6.46387 214.474 20.1026 187.907L113.606 94.4036L160.808 141.605L78.5457 223.867C71.8398 230.573 71.8398 241.446 78.5457 248.152C92.5312 262.137 113.606 283.212 113.606 283.212L113.632 283.186L160.834 330.387ZM160.86 235.958L208.01 188.808L255.212 236.009L208.062 283.159L160.86 235.958ZM160.811 47.1989L208.01 -1.33118e-06L395.917 187.907C422.483 214.474 422.483 257.547 395.917 284.112L302.414 377.615L255.212 330.414L337.477 248.149C340.691 244.935 342.502 240.566 342.506 236.007C342.503 231.456 340.697 227.085 337.477 223.865C295.754 182.142 160.811 47.1989 160.811 47.1989Z"
+          />
+        </svg>
+        <div id="spinner-overlay">
+          <noscript style="color: white">
+            <div>
+              <div class="margin title">
+                Flowinity requires JavaScript.
+              </div>
+              <div class="margin subtitle">
+                For Flowinity to work, you need to use a JavaScript enabled browser.
+              </div>
+            </div>
+          </noscript>
+        </div>
+      </div>
+    </div>
+    <script src="./src/main.ts" type="module"></script>
+    <script>
+      window.flowinityNetworkOffline = (error) => {
+        console.error(error);
+        document.getElementById("spinner-overlay").innerHTML = `
+          <div class="crashed">
+            <div class="margin title">
+              You are offline.
+            </div>
+            <div class="margin subtitle">
+              Flowinity requires an active internet connection. Please check your connection and refresh.
+            </div>
+          </div>
+        `;
+      };
+      window.flowinityInitError = (error) => {
+        console.error(error);
+        document.getElementById("spinner-overlay").innerHTML = `
+          <div class="crashed">
+            <div class="margin title">
+              Flowinity failed to initialize.
+            </div>
+            <div class="margin subtitle">
+              An error occurred while initializing Flowinity. Please try refreshing the page.
+            </div>
+            <code style="font-size: 9px">
+              ${error}
+            </code>
+          </div>
+        `;
+      };
+      addEventListener("error", () => {
+        if(window.tpuInternals === undefined) {
+          console.warn("Flowinity failed to initialize.")
+          document.getElementById("spinner-overlay").innerHTML = `
+          <div class="crashed">
+            <div class="margin title">
+              Flowinity requires a modern browser.
+            </div>
+            <div class="margin subtitle">
+              For Flowinity to work, you need to use a modern browser.  We recommend browsers such as <a target="_blank" href="https://www.google.com/chrome/">Chrome</a> or <a target="_blank" href="https://www.mozilla.org/firefox/">Firefox</a>.
+            </div>
+          </div>
+        `;
+        }
+      });
+    </script>
+  </body>
+</html>

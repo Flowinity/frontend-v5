@@ -1,0 +1,8 @@
+/api/v3 https://api.flowinity.com/v3 200
+/api/v3/* https://api.flowinity.com/v3/:splat 200
+/i https://i.flowinity.com/i 200
+/i/* https://i.flowinity.com/i/:splat 200
+/.well-known https://api.flowinity.com/.well-known 200
+/.well-known/* https://api.flowinity.com/.well-known/:splat 200
+/graphql https://api.flowinity.com/graphql 200
+/graphql/* https://api.flowinity.com/graphql/:splat 200
